@@ -11,9 +11,15 @@ class MenuActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.menu)
 
-        val button = findViewById<Button>(R.id.QrButton)
-        button.setOnClickListener {
+        val buttonQr = findViewById<Button>(R.id.btnQr)
+        buttonQr.setOnClickListener {
             intent = Intent(this, QrActivity::class.java)
+            startActivity(intent);
+        }
+
+        val buttonEdit = findViewById<Button>(R.id.btnEdit)
+        buttonEdit.setOnClickListener {
+            intent = Intent(this, RegistrationActivity::class.java)
             startActivity(intent);
         }
 
