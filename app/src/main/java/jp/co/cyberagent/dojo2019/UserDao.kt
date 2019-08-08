@@ -3,6 +3,7 @@ package jp.co.cyberagent.dojo2019
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
+import androidx.room.OnConflictStrategy.REPLACE
 import androidx.room.Query
 
 @Dao
@@ -21,7 +22,7 @@ interface UserDao {
     fun findByName(first: String, last: String): User
 
     // データモデルのクラスを引数に渡すことで、データの作成ができる。
-    @Insert
+    @Insert(onConflict = REPLACE)
     fun insert(user: User)
 
     // 可変長引数にしたり
