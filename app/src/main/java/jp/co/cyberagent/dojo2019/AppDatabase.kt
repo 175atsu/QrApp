@@ -14,8 +14,6 @@ abstract class AppDatabase : RoomDatabase() {
     // DAOを取得する。
     abstract fun userDao(): UserDao
 
-
-
     companion object {
         private var instance: AppDatabase? = null
 
