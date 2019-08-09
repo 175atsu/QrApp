@@ -6,6 +6,7 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy.REPLACE
 import androidx.room.Query
 
+//データの操作が集まってる、テーブル単位で作成
 @Dao
 interface UserDao {
 
@@ -18,8 +19,8 @@ interface UserDao {
     fun loadAllaByIds(vararg userIds: Int): List<User>
 
     // 複数の引数も渡せる
-    @Query("SELECT * FROM user WHERE first_name LIKE :first AND last_name LIKE :last LIMIT 1")
-    fun findByName(first: String, last: String): User
+    @Query("SELECT * FROM user WHERE name LIKE :name AND twitterID LIKE :twitterID AND githubID LIKE :githubID LIMIT 1")
+    fun findByName(name: String, twitterID: String, githubID: String): User
 
     // データモデルのクラスを引数に渡すことで、データの作成ができる。
     @Insert(onConflict = REPLACE)
@@ -38,6 +39,6 @@ interface UserDao {
     fun delete(user: User)
 
     // 複雑な条件で削除したい場合は、@Queryを使ってSQLを書く
-    @Query("DELETE FROM user WHERE age < :age")
-    fun deleteYoungerThan(age: Int)
+//    @Query("DELETE FROM user WHERE age < :age")
+//    fun deleteYoungerThan(age: Int)
 }
