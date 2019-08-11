@@ -13,12 +13,12 @@
             app:layout_constraintStart_toStartOf="parent" app:layout_constraintHorizontal_bias="0.495"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" android:layout_marginTop="168dp"
-            android:layout_marginBottom="103dp" app:layout_constraintBottom_toTopOf="@+id/btnReturnQr"/>
+            android:layout_marginBottom="103dp" app:layout_constraintBottom_toTopOf="@+id/btnReturn"/>
     <Button
             android:text="戻る"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/btnReturnQr" app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="8dp"
+            android:id="@+id/btnReturn" app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="8dp"
             app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="8dp" android:layout_marginBottom="112dp"
             app:layout_constraintBottom_toBottomOf="parent"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

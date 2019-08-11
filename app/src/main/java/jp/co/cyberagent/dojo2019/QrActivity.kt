@@ -1,6 +1,5 @@
 package jp.co.cyberagent.dojo2019
 
-import android.content.Context
 import android.content.Intent
 
 //package com.example.natsuki.qr
@@ -12,7 +11,6 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import android.widget.Button
 import android.widget.ImageView
-import androidx.annotation.MainThread
 import com.google.zxing.BarcodeFormat
 import com.google.zxing.WriterException
 import com.journeyapps.barcodescanner.BarcodeEncoder
@@ -28,9 +26,15 @@ class QrActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.qr_view)
 
-        val button = findViewById<Button>(R.id.btnReturnQr)
+        val button = findViewById<Button>(R.id.btnReturn)
         button.setOnClickListener {
             intent = Intent(this, QrActivity::class.java)
+            startActivity(intent);
+        }
+
+        val buttonQr = findViewById<Button>(R.id.btnReturn)
+        buttonQr.setOnClickListener {
+            intent = Intent(this, MenuActivity::class.java)
             startActivity(intent);
         }
 
@@ -52,7 +56,7 @@ class QrActivity : AppCompatActivity() {
             .observeOn(mainThread())
             //データの流れを監視、みる、流れてくるたびにプリントを実行する　/DISPOSEというクラスの処理だから出てきた。
             .subscribe({
-                Log.d("TAG2", it.uid.toString())
+                Log.d("TAG12", it.uid.toString())
                 val size = 1000
                 var myParameters = "?iam=${it.name}"+"&tw=${it.twitterID}"+"&gh=${it.githubID}"
                 try {
