@@ -25,7 +25,7 @@ class MenuActivity : AppCompatActivity() {
         //一覧画面へ
         val buttonList = findViewById<Button>(R.id.btnList)
         buttonList.setOnClickListener {
-            intent = Intent(this, RegistrationActivity::class.java)
+            intent = Intent(this, ListActivity::class.java)
             startActivity(intent);
         }
         //読み込み画面へ

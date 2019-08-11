@@ -28,15 +28,11 @@ class RegistrationActivity: AppCompatActivity() {
             var TwitterText: EditText = findViewById(R.id.twitter_text)
             var GithubText: EditText = findViewById(R.id.github_text)
             Log.d("TAG",NameText.text.toString())
-//            //var intent = Intent(this, ProfileData::class.java)
-//            intent.putExtra("NAME_DATA", NameText.text.toString())
-//            intent.putExtra("TWITTER_DATA", TwitterText.text.toString())
-//            intent.putExtra("GITHUB_DATA", GithubText.text.toString())
 
             //ユーザークラスのインスタンス化
             val user = User()
             //登録するデータ、項目名ではなく、User.ktでつけた変数名を使う
-            user.uid = "1"
+            user.uid = 1
             user.name = NameText.text.toString()
             user.twitterID = TwitterText.text.toString()
             user.githubID = GithubText.text.toString()

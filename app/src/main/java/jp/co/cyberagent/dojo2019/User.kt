@@ -9,7 +9,7 @@ import androidx.room.PrimaryKey
 class User {
     //外から呼び出す際に使う項目
     @PrimaryKey
-    var uid: String = "0"
+    var uid: Int = 0
     //ColumnInfoがあると、列（項目）の名前を指定できる。他で使うときはfirstName。項目名はfirst_name
     @ColumnInfo(name = "name")
     var name: String? = null
