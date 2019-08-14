@@ -1,6 +1,7 @@
 package jp.co.cyberagent.dojo2019
 
 import android.content.Intent
+import android.net.Uri
 
 //package com.example.natsuki.qr
 
@@ -43,8 +44,6 @@ class QrActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
 
-        val url = "ca-tech://dojo/share"
-
         var mydata  = Single.fromCallable { AppDatabase.getInstance(this).userDao().loadAllaByIds(1) } //データベースから取ってくる
             //ioスレッドで実行する。
             .subscribeOn(Schedulers.io())
@@ -58,11 +57,12 @@ class QrActivity : AppCompatActivity() {
             .subscribe({
                 Log.d("TAG12", it.uid.toString())
                 val size = 1000
-                var myParameters = "?iam=${it.name}"+"&tw=${it.twitter}"+"&gh=${it.github}"
+                var myParameters = Uri.Builder().scheme("ca-tech").authority("dojo").path("share").appendQueryParameter("iam",it.name).appendQueryParameter("tw",it.twitter).appendQueryParameter("gh",it.github).build().toString()
+                //var myParameters = "?iam=${it.name}"+"&tw=${it.twitter}"+"&gh=${it.github}"
                 try {
                     val barcodeEncoder = BarcodeEncoder()
                     //QRコードをBitmapで作成
-                    val bitmap = barcodeEncoder.encodeBitmap(url+myParameters, BarcodeFormat.QR_CODE, size, size)
+                    val bitmap = barcodeEncoder.encodeBitmap(myParameters, BarcodeFormat.QR_CODE, size, size)
                     //作成したQRコードを画面上に配置
                     val imageViewQrCode = findViewById<View>(R.id.imageView) as ImageView
                     imageViewQrCode.setImageBitmap(bitmap)

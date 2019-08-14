@@ -11,21 +11,20 @@
             android:layout_height="wrap_content"
             android:id="@+id/btnReturn" app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintHorizontal_bias="0.5" app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginBottom="25dp" app:layout_constraintBottom_toBottomOf="parent"
-    />
-    <TextView
-            android:text="TextView"
-            android:layout_width="wrap_content"
-            android:layout_height="34dp"
-            android:id="@+id/textView4" app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" android:layout_marginTop="48dp"/>
+            app:layout_constraintBottom_toBottomOf="parent" android:layout_marginBottom="20dp"/>
     <androidx.recyclerview.widget.RecyclerView
-            android:layout_width="306dp"
-            android:layout_height="362dp"
+            android:layout_width="305dp"
+            android:layout_height="347dp"
             android:id="@+id/recyclerView" app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginTop="79dp" app:layout_constraintTop_toBottomOf="@+id/textView4"
-            android:layout_marginBottom="135dp" app:layout_constraintBottom_toTopOf="@+id/btnReturn">
+            android:layout_marginTop="30dp" app:layout_constraintTop_toBottomOf="@+id/textView11">
     </androidx.recyclerview.widget.RecyclerView>
+    <TextView
+            android:text="登録リスト"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/textView11" app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="53dp" app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginEnd="288dp"
+            android:layout_marginTop="50dp" app:layout_constraintTop_toTopOf="parent"/>
 </androidx.constraintlayout.widget.ConstraintLayout>
