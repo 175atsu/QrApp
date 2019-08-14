@@ -14,7 +14,7 @@ class User {
     @ColumnInfo(name = "name")
     var name: String? = null
 
-    var twitterID: String? = null
+    var twitter: String? = null
 
-    var githubID: String? = null
+    var github: String? = null
 }

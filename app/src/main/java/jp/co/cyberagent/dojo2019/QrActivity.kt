@@ -58,7 +58,7 @@ class QrActivity : AppCompatActivity() {
             .subscribe({
                 Log.d("TAG12", it.uid.toString())
                 val size = 1000
-                var myParameters = "?iam=${it.name}"+"&tw=${it.twitterID}"+"&gh=${it.githubID}"
+                var myParameters = "?iam=${it.name}"+"&tw=${it.twitter}"+"&gh=${it.github}"
                 try {
                     val barcodeEncoder = BarcodeEncoder()
                     //QRコードをBitmapで作成

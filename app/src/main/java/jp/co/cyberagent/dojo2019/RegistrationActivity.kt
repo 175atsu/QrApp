@@ -34,8 +34,8 @@ class RegistrationActivity: AppCompatActivity() {
             //登録するデータ、項目名ではなく、User.ktでつけた変数名を使う
             user.uid = 1
             user.name = NameText.text.toString()
-            user.twitterID = TwitterText.text.toString()
-            user.githubID = GithubText.text.toString()
+            user.twitter = TwitterText.text.toString()
+            user.github = GithubText.text.toString()
             //保存する処理・他のスレッドでやる（メインだとできない）
             thread {
                 AppDatabase.getInstance(this).userDao().insert(user)

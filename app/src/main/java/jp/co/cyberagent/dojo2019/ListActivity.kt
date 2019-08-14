@@ -1,6 +1,8 @@
 package jp.co.cyberagent.dojo2019
 
 
+
+import android.app.PendingIntent.getActivity
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -8,31 +10,19 @@ import android.view.View
 import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import androidx.room.Room
-import io.reactivex.Single
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.rxkotlin.toObservable
-import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.list_view.*
 import kotlin.concurrent.thread
 import java.util.Random
 
 class ListActivity  : AppCompatActivity() {
 
-//    private val mSampleData = itemList()
-//    private lateinit var adapter : RecyclerView.Adapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.list_view)
-
-        // データを設定
-//        adapter = RecyclerAdapter(this, mSampleData)
-//        listView2.adapter = adapter
-
-        recyclerViewInitialSetting()
 
         val buttonQr = findViewById<Button>(R.id.btnReturn)
         buttonQr.setOnClickListener {
@@ -41,6 +31,15 @@ class ListActivity  : AppCompatActivity() {
         }
 
         //カスタムスキームURL取得　　解説求める
+        reedCustom()
+        //recyclerViewのセッティング
+        recyclerViewInitialSetting()
+    }
+
+    //カスタムURLの読み取り
+    fun reedCustom() {
+
+        //
         val intent = intent
         val action = intent.action
         if (Intent.ACTION_VIEW == action) {
@@ -54,90 +53,80 @@ class ListActivity  : AppCompatActivity() {
             //URLからパラメータの取得
             var values = uri.toString().split(Regex("[ =,&,\n]"))
                 .filter { it.isNotEmpty() }
-                .filterIndexed {index, _ -> index % 2 != 0}
+                .filterIndexed { index, _ -> index % 2 != 0 }
             Log.d("TAG1", values.toString())
 
             user.uid = Random().nextInt()
             user.name = values[0]
-            user.twitterID = values[1]
-            user.githubID = values[2]
+            user.twitter = values[1]
+            user.github = values[2]
             Log.d("TAG2", user.uid.toString())
             Log.d("TAG3", user.name)
-            Log.d("TAG4", user.twitterID)
-            Log.d("TAG5", user.githubID)
+            Log.d("TAG4", user.twitter)
+            Log.d("TAG5", user.github)
 
             thread {
                 AppDatabase.getInstance(this).userDao().insert(user)
             }
 
-            var mydata  = Single.fromCallable { AppDatabase.getInstance(this).userDao().getAll() }
-                //ioスレッドで実行する。
-                .subscribeOn(Schedulers.io())
-                //シングルからオブザバブルに変換
-                .flatMapObservable { it.toObservable() }
-                //変換する　文字列で来たものを数字にしたり
-                .map { it}
-                //ここまでに処理をmainThreadで実行 デフォルトの名前
-                .observeOn(AndroidSchedulers.mainThread())
-                //データの流れを監視、みる、流れてくるたびにプリントを実行する　/DISPOSEというクラスの処理だから出てきた。
-                .subscribe({  Log.d("TAG6", it.uid.toString()+it.name)})
-                }
+        }
 
-   }
+    }
 
 
     //アダプターなどなどの設定
     fun recyclerViewInitialSetting() {
-        val recyclerView = recyclerView
+        val rv = recyclerView
         val adapter = MemberRecycleViewAdapter(fetchAllUserData(), object : MemberRecycleViewAdapter.ListListener {
             override fun onClickRow(tappedView: View, userListModel: MemberListModel) {
                 this.onClickRow(tappedView, userListModel)
             }
         })
-        recyclerView.setHasFixedSize(true)
-        recyclerView.layoutManager = LinearLayoutManager(this)
-        recyclerView.adapter = adapter
-
+        //リストのtrueコンテンツの大きさがデータによって変わらないならを渡す。これをRecyclerViewにいつもすることで、パフォーマンスが良くなる。
+        rv.setHasFixedSize(true)
+        rv.layoutManager = LinearLayoutManager(this)
+        rv.adapter = adapter
     }
-
-    //セルのタップ
-//    fun onClickRow(tappedView: View, userListModel: MemberListModel) {
-//        //toDetailViewへ画面遷移
-//        toUserDetailActivity(userListModel)
-//    }
 
     //DBに保存したデータの取得
     fun fetchAllUserData(): List<MemberListModel> {
         //データリスト
         val dataList = mutableListOf<MemberListModel>()
+        // 永続データベースを作成
+        val db = Room.databaseBuilder(applicationContext, AppDatabase::class.java, "database.db").build()
         //DBからユーザーデータの取得
-        var memberData  = Single.fromCallable { AppDatabase.getInstance(this).userDao().getAll() } //データベースから取ってくる
-            //ioスレッドで実行する。
-            .subscribeOn(Schedulers.io())
-            //シングルからオブザバブルに変換
-            .flatMapObservable { it.toObservable() }
-            //変換する　文字列で来たものを数字にしたり
-            .map { it}
-            //ここまでに処理をmainThreadで実行 デフォルトの名前
-            .observeOn(AndroidSchedulers.mainThread())
-            //データの流れを監視、みる、流れてくるたびにプリントを実行する　/DISPOSEというクラスの処理だから出てきた。
-            .subscribe({Log.d("TAG12", it.name.toString())
-                var data : MemberListModel = MemberListModel().also {
-                    it.nameID = it.nameID
-                    it.twitterID = it.twitterID
-                    it.githubID = it.githubID
-                    }
-                dataList.add(data)})
+        val dao = db.userDao()
 
+        dao.getAll().observe(this, Observer<List<User>> { users ->
+            if (users != null) {
+                Log.d("TAG3",users.toString())
+                for (i in users) {
+                    val data: MemberListModel = MemberListModel().also {
+                        it.nameID = i.name
+                        it.twitterID = i.twitter
+                        it.githubID = i.github
+                    }
+                    dataList.add(data)
+                }
+                //更新
+                recyclerView.adapter?.notifyDataSetChanged()
+            }
+        })
         return dataList
     }
 
-
-
-    override fun onStart() {
-        super.onStart()
-
+    //セルのタップ
+    fun onClickRow(tappedView: View, userListModel: MemberListModel) {
+        //toDetailViewへ画面遷移
+        toUserDetailActivity(userListModel)
     }
 
-
+    //UserDetailActivityへの遷移とアカウントの値渡し
+    fun toUserDetailActivity(userAccount: MemberListModel) {
+        val intent = Intent (getActivity(), MemberDetailActivity::class.java)
+        intent.putExtra("NAME", userAccount.nameID)
+        intent.putExtra("TWITTER", userAccount.twitterID)
+        intent.putExtra("GITHUB", userAccount.githubID)
+        getActivity()?.startActivity(intent)
+    }
 }
