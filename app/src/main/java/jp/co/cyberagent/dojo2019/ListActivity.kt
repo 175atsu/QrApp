@@ -2,8 +2,9 @@ package jp.co.cyberagent.dojo2019
 
 
 
-import android.app.PendingIntent.getActivity
+
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -11,11 +12,14 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.room.Room
 import kotlinx.android.synthetic.main.list_view.*
 import kotlin.concurrent.thread
 import java.util.Random
+
 
 class ListActivity  : AppCompatActivity() {
 
@@ -34,6 +38,9 @@ class ListActivity  : AppCompatActivity() {
         reedCustom()
         //recyclerViewのセッティング
         recyclerViewInitialSetting()
+
+        val itemDecoration = DividerItemDecoration(this, DividerItemDecoration.VERTICAL)
+        recyclerView.addItemDecoration(itemDecoration)
     }
 
     //カスタムURLの読み取り
@@ -46,9 +53,6 @@ class ListActivity  : AppCompatActivity() {
             val user = User()
             //URL取得
             var uri = intent.data
-            //テキスト表示
-            var messageView: TextView = findViewById(R.id.textView4)
-            messageView.setText(uri.toString());
 
             //URLからパラメータの取得
             var values = uri.toString().split(Regex("[ =,&,\n]"))
@@ -79,13 +83,15 @@ class ListActivity  : AppCompatActivity() {
         val rv = recyclerView
         val adapter = MemberRecycleViewAdapter(fetchAllUserData(), object : MemberRecycleViewAdapter.ListListener {
             override fun onClickRow(tappedView: View, userListModel: MemberListModel) {
-                this.onClickRow(tappedView, userListModel)
+                onClickRow2(tappedView, userListModel)
             }
         })
         //リストのtrueコンテンツの大きさがデータによって変わらないならを渡す。これをRecyclerViewにいつもすることで、パフォーマンスが良くなる。
         rv.setHasFixedSize(true)
-        rv.layoutManager = LinearLayoutManager(this)
+        rv.layoutManager = GridLayoutManager(this, 2)
         rv.adapter = adapter
+
+
     }
 
     //DBに保存したデータの取得
@@ -116,17 +122,18 @@ class ListActivity  : AppCompatActivity() {
     }
 
     //セルのタップ
-    fun onClickRow(tappedView: View, userListModel: MemberListModel) {
+    fun onClickRow2(tappedView: View, userListModel: MemberListModel) {
         //toDetailViewへ画面遷移
         toUserDetailActivity(userListModel)
     }
 
-    //UserDetailActivityへの遷移とアカウントの値渡し
+    //詳細ページへの遷移
     fun toUserDetailActivity(userAccount: MemberListModel) {
-        val intent = Intent (getActivity(), MemberDetailActivity::class.java)
+        val intent = Intent (this, MemberDetailActivity::class.java)
         intent.putExtra("NAME", userAccount.nameID)
         intent.putExtra("TWITTER", userAccount.twitterID)
         intent.putExtra("GITHUB", userAccount.githubID)
-        getActivity()?.startActivity(intent)
+        startActivity(intent);
     }
+
 }

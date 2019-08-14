@@ -27,5 +27,7 @@
                 <data android:scheme="ca-tech" android:host="dojo" android:path="/share" />
             </intent-filter>
         </activity>
+        <activity android:name=".MemberDetailActivity"></activity>
+        <activity android:name=".WebViewActivity"></activity>
     </application>
 </manifest>
