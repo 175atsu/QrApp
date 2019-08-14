@@ -9,14 +9,15 @@ import androidx.recyclerview.widget.RecyclerView
 
 //質問　itemClickListenerとは
 class MemberRecycleViewAdapter( private val itemList:List<MemberListModel>, private val listener: ListListener ) : RecyclerView.Adapter<MemberViewHolder>() {
-    private var mRecyclerView : RecyclerView? = null
 
+    //レイアウト
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MemberViewHolder {
             val layoutInflater = LayoutInflater.from(parent.context)
-            val rowView = layoutInflater.inflate(R.layout.list_view, parent, false)
+            val rowView = layoutInflater.inflate(R.layout.row, parent, false)
             return MemberViewHolder(rowView)
         }
 
+    //データ
     override fun onBindViewHolder(holder: MemberViewHolder, position: Int) {
         holder?.let {
             it.nameID.text = itemList[position].nameID
@@ -27,10 +28,10 @@ class MemberRecycleViewAdapter( private val itemList:List<MemberListModel>, priv
             it.itemView.setOnClickListener {
                 listener.onClickRow(it, itemList[position])
             }
-
         }
     }
 
+    //リストの数取得
     override fun getItemCount(): Int {
         return itemList.size
     }

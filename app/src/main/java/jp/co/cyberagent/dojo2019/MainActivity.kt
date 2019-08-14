@@ -22,4 +22,5 @@ class MainActivity : AppCompatActivity() {
         var intent = Intent(this, RegistrationActivity::class.java)
         startActivity(intent);
     }
+
 }
