@@ -7,7 +7,9 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.room.Room
 import kotlinx.android.synthetic.main.member_detail_view.*
+import kotlinx.android.synthetic.main.row.*
 import kotlin.concurrent.thread
 
 class MemberDetailActivity : AppCompatActivity() {
@@ -57,13 +59,21 @@ class MemberDetailActivity : AppCompatActivity() {
         setMessage("削除してもよろしいですか")
         setPositiveButton("OK", DialogInterface.OnClickListener { _, _ ->
             // OKをタップしたときの処理
-            val user = User()
-            user.uid = 1
-            user.name = user_name.text.toString()
-            //user.twitter = user_twitter.text.toString()
-            user.github = user_github.text.toString()
+            // 永続データベースを作成
+            val db = Room.databaseBuilder(applicationContext, AppDatabase::class.java, "database.db").build()
+            //DBからユーザーデータの取得
+            val dao = db.userDao()
 //            thread {
-//                AppDatabase.getInstance(this).userDao().delete(user)
+//                val users = dao.findByName(name = NAME,)
+//                if (users.isNotEmpty()) {
+//                    NameText.setText(users.get(0).name)
+//                    TwitterText.setText(users.get(0).twitter)
+//                    GithubText.setText(users.get(0).github)
+//                } else {
+//                    NameText.text = null
+//                    TwitterText.text = null
+//                    GithubText.text = null
+//                }
 //            }
         })
         setNegativeButton("Cancel", null)
