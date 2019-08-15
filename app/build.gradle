@@ -48,7 +48,7 @@ dependencies {
     implementation 'com.facebook.stetho:stetho:1.5.1'
 
     //recycleview
-
-    //implementation 'androidx.recyclerview:recyclerview:1.1.0-beta02'
     implementation 'androidx.recyclerview:recyclerview:1.0.0'
+    //スポットライト
+    implementation 'com.github.takusemba:spotlight:1.8.0'
 }

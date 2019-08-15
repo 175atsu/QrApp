@@ -5,11 +5,17 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.view.animation.DecelerateInterpolator
 import android.widget.Button
 import android.widget.EditText
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import com.takusemba.spotlight.OnSpotlightStateChangedListener
+import com.takusemba.spotlight.Spotlight
+import com.takusemba.spotlight.shape.RoundedRectangle
+import com.takusemba.spotlight.target.SimpleTarget
 import kotlinx.android.synthetic.main.member_detail_view.*
 import java.util.*
 import kotlin.concurrent.thread
@@ -23,6 +29,7 @@ class RegistrationActivity: AppCompatActivity() {
 
         //読み込み
         reedMydata()
+        spotLite()
 
         //ボタンの名前の設定
         val button = findViewById<Button>(R.id.btnSave)
@@ -77,5 +84,53 @@ class RegistrationActivity: AppCompatActivity() {
         thread {
             AppDatabase.getInstance(this).userDao().insert(user)
         }
+    }
+
+    fun spotLite() {
+        val target = findViewById<Button>(R.id.btnSave)
+        val targetLocation = IntArray(2)
+        target.getLocationInWindow(targetLocation)
+        val targetX = targetLocation[0] + target.width / 2f
+        val targetY = targetLocation[1] + target.height / 2f
+        // 円の大きさ
+        val targetRadius = 200f
+        // 四角いコーチマークの高さと幅を追加
+        val targetWidth = 400f
+        val targetHeight = 400f
+
+        // first target
+        val firstTarget = SimpleTarget.Builder(this@RegistrationActivity)
+            .setPoint(targetX, targetY)
+            // CircleからRoundedRectangleに変更すると四角いコーチマーク表示できる
+            .setShape(RoundedRectangle(targetWidth, targetHeight, 25f))
+            .setTitle("タイトル")
+            .setDescription("メッセージここで表示")
+            .setOverlayPoint(100f, targetY + targetRadius + 100f)
+            .build()
+
+        // コーチマークを作成
+        Spotlight.with(this@RegistrationActivity)
+            // コーチマーク表示される時の背景の色
+            .setOverlayColor(R.color.background)
+            // 表示する時間
+            .setDuration(1000L)
+            // 表示するスピード
+            .setAnimation(DecelerateInterpolator(2f))
+            // 注目されたいところ（複数指定も可能）
+            .setTargets(firstTarget)
+            // 注目されたいところ以外をタップする時に閉じられるかどうか
+            .setClosedOnTouchedOutside(true)
+            // コーチマーク表示される時になんかする
+            .setOnSpotlightStateListener(object : OnSpotlightStateChangedListener {
+                override fun onStarted() {
+                    Toast.makeText(this@RegistrationActivity, "spotlight is started", Toast.LENGTH_SHORT)
+                        .show()
+                }
+
+                override fun onEnded() {
+                    Toast.makeText(this@RegistrationActivity, "spotlight is ended", Toast.LENGTH_SHORT).show()
+                }
+            })
+            .start()
     }
 }
