@@ -3,8 +3,15 @@
                                                    xmlns:app="http://schemas.android.com/apk/res-auto"
                                                    xmlns:tools="http://schemas.android.com/tools"
                                                    android:orientation="vertical"
+                                                   android:background="@drawable/style_back"
                                                    android:layout_width="match_parent"
                                                    android:layout_height="match_parent">
+    <ImageView
+            android:layout_width="340dp"
+            android:layout_height="525dp" app:srcCompat="@drawable/style_list"
+            android:id="@+id/imageView5" app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="16dp" app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintHorizontal_bias="0.5" app:layout_constraintEnd_toEndOf="parent"/>
     <Button
             android:text="戻る"
             android:layout_width="wrap_content"

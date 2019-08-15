@@ -23,30 +23,34 @@ class MenuActivity : AppCompatActivity() {
         //qr表示画面へ
         val buttonQr = findViewById<View>(R.id.abc)
         buttonQr.setOnClickListener {
-            intent = Intent(this, QrActivity::class.java)
+            val intent = Intent(this, QrActivity::class.java)
             val compat = ActivityOptionsCompat.makeSceneTransitionAnimation(
                 this, abc,
                 abc.getTransitionName()
             )
-            //startActivity(intent, compat.toBundle())
-            startActivity(intent);
+            startActivity(intent, compat.toBundle())
+            //startActivity(intent);
         }
         //編集画面へ
         val buttonEdit = findViewById<Button>(R.id.btnEdit)
         buttonEdit.setOnClickListener {
-            intent = Intent(this, RegistrationActivity::class.java)
+            val intent = Intent(this, RegistrationActivity::class.java)
             startActivity(intent);
         }
         //一覧画面へ
-        val buttonList = findViewById<Button>(R.id.btnList)
+        val buttonList = findViewById<View>(R.id.btnList)
         buttonList.setOnClickListener {
-            intent = Intent(this, ListActivity::class.java)
+            val intent = Intent(this, ListActivity::class.java)
+            val compat = ActivityOptionsCompat.makeSceneTransitionAnimation(
+                this, abc,
+                abc.getTransitionName()
+            )
             startActivity(intent);
         }
         //読み込み画面へ
         val buttonCamera = findViewById<Button>(R.id.btnCamera)
         buttonCamera.setOnClickListener {
-            intent = Intent(this, RegistrationActivity::class.java)
+            val intent = Intent(this, RegistrationActivity::class.java)
             startActivity(intent);
         }
 
