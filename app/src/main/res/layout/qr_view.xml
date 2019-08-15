@@ -17,9 +17,10 @@
             app:layout_constraintBottom_toBottomOf="parent"/>
     <ImageView
             android:layout_width="340dp"
-            android:layout_height="525dp" app:srcCompat="@drawable/style_frame"
+            android:layout_height="525dp"
+            android:background="@drawable/style_frame"
             android:id="@+id/imageView4"
-            android:transitionName="image"
+            android:transitionName="image1"
             android:layout_marginTop="16dp" app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent" app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintEnd_toEndOf="parent"/>

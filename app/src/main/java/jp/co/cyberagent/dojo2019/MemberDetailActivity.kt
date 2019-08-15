@@ -4,7 +4,9 @@ import android.app.AlertDialog
 import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.room.Room
@@ -17,8 +19,8 @@ class MemberDetailActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.member_detail_view)
-        val buttonTwitter = findViewById<TextView>(R.id.user_twitter)
-        val buttonGithub = findViewById<TextView>(R.id.user_github)
+        //val buttonTwitter = findViewById<TextView>(R.id.user_twitter)
+        //val buttonGithub = findViewById<TextView>(R.id.user_github)
 
 
         web()
@@ -44,11 +46,11 @@ class MemberDetailActivity : AppCompatActivity() {
         val userNameTextView = findViewById<TextView>(R.id.user_name).apply {
             text = userName
         }
-        val gitHubAccountTextView = findViewById<TextView>(R.id.user_github).apply {
-            text = gitHub
+        val gitHubAccountTextView = findViewById<ImageView>(R.id.user_github).apply {
+            //text = gitHub
         }
-        val twitterTextView = findViewById<TextView>(R.id.user_twitter).apply {
-            text = twitter
+        val twitterTextView = findViewById<ImageView>(R.id.user_twitter).apply {
+            //text = twitter
         }
     }
 
@@ -82,17 +84,19 @@ class MemberDetailActivity : AppCompatActivity() {
 
     fun web() {
 
-        val buttonTwitter = findViewById<TextView>(R.id.user_twitter)
+        val buttonTwitter = findViewById<ImageView>(R.id.user_twitter)
         buttonTwitter.setOnClickListener{
             val twitterWeb = Intent(applicationContext, WebViewActivity::class.java)
-            val twitter = findViewById<TextView>(R.id.user_twitter).text
+            val twitter = intent.getStringExtra("TWITTER")
+            //val twitter = findViewById<ImageView>(R.id.user_twitter).text
             twitterWeb.putExtra("TWITTER","https://twitter.com/$twitter")
             startActivity(twitterWeb)
         }
-        val buttonGithub = findViewById<TextView>(R.id.user_github)
+        val buttonGithub = findViewById<ImageView>(R.id.user_github)
         buttonGithub.setOnClickListener {
             val githubWeb = Intent(applicationContext, WebViewActivity::class.java)
-            val gitHub = findViewById<TextView>(R.id.user_github).text
+            //val gitHub = findViewById<TextView>(R.id.user_github).text
+            val gitHub = intent.getStringExtra("GITHUB")
             githubWeb.putExtra("GITHUB","https://github.com/$gitHub")
             startActivity(githubWeb)
         }

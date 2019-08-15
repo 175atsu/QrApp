@@ -8,7 +8,9 @@
                                                    android:layout_height="match_parent">
     <ImageView
             android:layout_width="340dp"
-            android:layout_height="525dp" app:srcCompat="@drawable/style_list"
+            android:layout_height="550dp"
+            android:background="@drawable/style_list"
+            android:transitionName="image2"
             android:id="@+id/imageView5" app:layout_constraintTop_toTopOf="parent"
             android:layout_marginTop="16dp" app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintHorizontal_bias="0.5" app:layout_constraintEnd_toEndOf="parent"/>
@@ -18,7 +20,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/btnReturn" app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintHorizontal_bias="0.5" app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent" android:layout_marginBottom="20dp"/>
+            app:layout_constraintBottom_toBottomOf="parent" android:layout_marginBottom="58dp"/>
     <androidx.recyclerview.widget.RecyclerView
             android:layout_width="305dp"
             android:layout_height="347dp"

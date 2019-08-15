@@ -26,12 +26,13 @@ class QrActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.qr_view)
+        findViewById<View>(R.id.imageView4)
 
-        val button = findViewById<Button>(R.id.btnReturn)
-        button.setOnClickListener {
-            intent = Intent(this, QrActivity::class.java)
-            startActivity(intent);
-        }
+//        val button = findViewById<Button>(R.id.btnReturn)
+//        button.setOnClickListener {
+//            intent = Intent(this, QrActivity::class.java)
+//            startActivity(intent);
+//        }
 
         val buttonQr = findViewById<Button>(R.id.btnReturn)
         buttonQr.setOnClickListener {

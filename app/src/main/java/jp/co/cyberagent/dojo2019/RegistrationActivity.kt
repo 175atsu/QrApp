@@ -1,35 +1,51 @@
 package jp.co.cyberagent.dojo2019
 
-import android.content.Context
+
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.view.ViewTreeObserver
 import android.view.animation.DecelerateInterpolator
 import android.widget.Button
 import android.widget.EditText
+import android.widget.RelativeLayout
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.room.Room
-import androidx.room.RoomDatabase
 import com.takusemba.spotlight.OnSpotlightStateChangedListener
 import com.takusemba.spotlight.Spotlight
 import com.takusemba.spotlight.shape.RoundedRectangle
 import com.takusemba.spotlight.target.SimpleTarget
-import kotlinx.android.synthetic.main.member_detail_view.*
-import java.util.*
 import kotlin.concurrent.thread
 
 
 class RegistrationActivity: AppCompatActivity() {
 
+    lateinit var mGlobalLayoutListener: ViewTreeObserver.OnGlobalLayoutListener
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.registration)
+        val mParentLayout: ConstraintLayout =  findViewById(R.id.Constraint)
+
+
+        //sam変換調べる
+        mGlobalLayoutListener = ViewTreeObserver.OnGlobalLayoutListener {
+            //高さとかget
+            val width = mParentLayout.getWidth()
+            val height = mParentLayout.getHeight()
+            //スポットライト
+            spotLite()
+            //何回も呼ばれるので1回しか呼ばれないように外す
+            mParentLayout.viewTreeObserver.removeOnGlobalLayoutListener(mGlobalLayoutListener)
+        }
+        //mGlobalLayoutListenerをaddする、呼び出したい処理をセットする。
+        mParentLayout.viewTreeObserver.addOnGlobalLayoutListener(mGlobalLayoutListener)
 
         //読み込み
         reedMydata()
-        spotLite()
 
         //ボタンの名前の設定
         val button = findViewById<Button>(R.id.btnSave)
@@ -87,25 +103,61 @@ class RegistrationActivity: AppCompatActivity() {
     }
 
     fun spotLite() {
-        val target = findViewById<Button>(R.id.btnSave)
+        //fast target
+        val target = findViewById<View>(R.id.name_text)
         val targetLocation = IntArray(2)
         target.getLocationInWindow(targetLocation)
-        val targetX = targetLocation[0] + target.width / 2f
+        val targetX = targetLocation[0] + target.width / 2f  - 50f
         val targetY = targetLocation[1] + target.height / 2f
+
+        //second target
+        val target2 = findViewById<View>(R.id.twitter_text)
+        val targetLocation2 = IntArray(2)
+        target2.getLocationInWindow(targetLocation2)
+        val targetX2 = targetLocation2[0] + target2.width / 2f - 50f
+        val targetY2 = targetLocation2[1] + target2.height / 2f
+
+        //third target
+        val target3 = findViewById<View>(R.id.github_text)
+        val targetLocation3 = IntArray(2)
+        target3.getLocationInWindow(targetLocation3)
+        val targetX3 = targetLocation3[0] + target3.width / 2f - 50f
+        val targetY3 = targetLocation3[1] + target3.height / 2f
+
         // 円の大きさ
         val targetRadius = 200f
         // 四角いコーチマークの高さと幅を追加
-        val targetWidth = 400f
-        val targetHeight = 400f
+        val targetWidth = 200f
+        val targetHeight = 1000f
 
         // first target
         val firstTarget = SimpleTarget.Builder(this@RegistrationActivity)
             .setPoint(targetX, targetY)
             // CircleからRoundedRectangleに変更すると四角いコーチマーク表示できる
             .setShape(RoundedRectangle(targetWidth, targetHeight, 25f))
-            .setTitle("タイトル")
-            .setDescription("メッセージここで表示")
+            .setTitle("名前入力")
+            .setDescription("あなたの名前を入れてね")
             .setOverlayPoint(100f, targetY + targetRadius + 100f)
+            .build()
+
+        // second target
+        val secondTarget = SimpleTarget.Builder(this@RegistrationActivity)
+            .setPoint(targetX2, targetY2)
+            // CircleからRoundedRectangleに変更すると四角いコーチマーク表示できる
+            .setShape(RoundedRectangle(targetWidth, targetHeight, 25f))
+            .setTitle("Twitter")
+            .setDescription("@←これはいらないよ")
+            .setOverlayPoint(100f, targetY2 + targetRadius + 100f)
+            .build()
+
+        // third target
+        val thirdTarget = SimpleTarget.Builder(this@RegistrationActivity)
+            .setPoint(targetX3, targetY3)
+            // CircleからRoundedRectangleに変更すると四角いコーチマーク表示できる
+            .setShape(RoundedRectangle(targetWidth, targetHeight, 25f))
+            .setTitle("Giuhub")
+            .setDescription("アカウント名書くんだよ")
+            .setOverlayPoint(100f, targetY3 + targetRadius + 100f)
             .build()
 
         // コーチマークを作成
@@ -117,7 +169,7 @@ class RegistrationActivity: AppCompatActivity() {
             // 表示するスピード
             .setAnimation(DecelerateInterpolator(2f))
             // 注目されたいところ（複数指定も可能）
-            .setTargets(firstTarget)
+            .setTargets(firstTarget, secondTarget, thirdTarget)
             // 注目されたいところ以外をタップする時に閉じられるかどうか
             .setClosedOnTouchedOutside(true)
             // コーチマーク表示される時になんかする
