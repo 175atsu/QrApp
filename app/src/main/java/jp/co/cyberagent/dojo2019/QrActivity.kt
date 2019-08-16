@@ -28,17 +28,11 @@ class QrActivity : AppCompatActivity() {
         setContentView(R.layout.qr_view)
         findViewById<View>(R.id.imageView4)
 
-//        val button = findViewById<Button>(R.id.btnReturn)
-//        button.setOnClickListener {
-//            intent = Intent(this, QrActivity::class.java)
+//        val buttonQr = findViewById<Button>(R.id.btnReturn)
+//        buttonQr.setOnClickListener {
+//            intent = Intent(this, MenuActivity::class.java)
 //            startActivity(intent);
 //        }
-
-        val buttonQr = findViewById<Button>(R.id.btnReturn)
-        buttonQr.setOnClickListener {
-            intent = Intent(this, MenuActivity::class.java)
-            startActivity(intent);
-        }
 
     }
 

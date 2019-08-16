@@ -11,12 +11,15 @@ import android.view.View
 import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityOptionsCompat
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.room.Room
 import kotlinx.android.synthetic.main.list_view.*
+import kotlinx.android.synthetic.main.menu.*
+import kotlinx.android.synthetic.main.row.*
 import kotlin.concurrent.thread
 import java.util.Random
 
@@ -28,11 +31,11 @@ class ListActivity  : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.list_view)
 
-        val buttonQr = findViewById<Button>(R.id.btnReturn)
-        buttonQr.setOnClickListener {
-            intent = Intent(this, MenuActivity::class.java)
-            startActivity(intent);
-        }
+//        val buttonQr = findViewById<Button>(R.id.btnReturn)
+//        buttonQr.setOnClickListener {
+//            intent = Intent(this, MenuActivity::class.java)
+//            startActivity(intent);
+//        }
 
         //カスタムスキームURL取得　　解説求める
         reedCustom()
@@ -133,7 +136,11 @@ class ListActivity  : AppCompatActivity() {
         intent.putExtra("NAME", userAccount.nameID)
         intent.putExtra("TWITTER", userAccount.twitterID)
         intent.putExtra("GITHUB", userAccount.githubID)
-        startActivity(intent);
+        val compat = ActivityOptionsCompat.makeSceneTransitionAnimation(
+            this, cell,
+            cell.getTransitionName()
+        )
+        startActivity(intent, compat.toBundle())
     }
 
 }

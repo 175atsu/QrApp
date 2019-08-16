@@ -20,18 +20,15 @@ class MemberDetailActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.member_detail_view)
-        //val buttonTwitter = findViewById<TextView>(R.id.user_twitter)
-        //val buttonGithub = findViewById<TextView>(R.id.user_github)
-
 
         web()
         showAccount()
 
-        val buttonReturn = findViewById<Button>(R.id.btnReturn)
-        buttonReturn.setOnClickListener {
-            intent = Intent(this, ListActivity::class.java)
-            startActivity(intent);
-        }
+//        val buttonReturn = findViewById<Button>(R.id.btnReturn)
+//        buttonReturn.setOnClickListener {
+//            intent = Intent(this, ListActivity::class.java)
+//            startActivity(intent);
+//        }
 
         val buttonDetail = findViewById<Button>(R.id.btnDetail)
         buttonDetail.setOnClickListener {
@@ -58,9 +55,9 @@ class MemberDetailActivity : AppCompatActivity() {
     //アラート
     // ダイアログを作成して表示
     fun alert() = AlertDialog.Builder(this).apply {
-        setTitle("削除します")
-        setMessage("削除してもよろしいですか")
-        setPositiveButton("OK", DialogInterface.OnClickListener { _, _ ->
+        setTitle("削除できません")
+        setMessage("１度出会った人との繋がりを絶っていいんですか？")
+        setPositiveButton("NO", DialogInterface.OnClickListener { _, _ ->
             // OKをタップしたときの処理
             // 永続データベースを作成
             val db = Room.databaseBuilder(applicationContext, AppDatabase::class.java, "database.db").build()
@@ -79,7 +76,7 @@ class MemberDetailActivity : AppCompatActivity() {
 //                }
 //            }
         })
-        setNegativeButton("Cancel", null)
+        setNegativeButton("NO", null)
         show()
     }
 

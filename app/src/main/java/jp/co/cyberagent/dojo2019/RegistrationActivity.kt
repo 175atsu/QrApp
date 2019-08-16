@@ -156,7 +156,7 @@ class RegistrationActivity: AppCompatActivity() {
             .setPoint(targetX3, targetY3)
             // CircleからRoundedRectangleに変更すると四角いコーチマーク表示できる
             .setShape(RoundedRectangle(targetWidth, targetHeight, 25f))
-            .setTitle("Giuhub")
+            .setTitle("Github")
             .setDescription("アカウント名書くんだよ")
             .setOverlayPoint(100f, targetY3 + targetRadius + 100f)
             .build()
@@ -168,7 +168,7 @@ class RegistrationActivity: AppCompatActivity() {
             // 表示する時間
             .setDuration(1000L)
             // 表示するスピード
-            .setAnimation(DecelerateInterpolator(2f))
+            .setAnimation(DecelerateInterpolator(1f))
             // 注目されたいところ（複数指定も可能）
             .setTargets(firstTarget, secondTarget, thirdTarget)
             // 注目されたいところ以外をタップする時に閉じられるかどうか
