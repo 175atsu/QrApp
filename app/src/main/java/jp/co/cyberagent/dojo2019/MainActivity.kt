@@ -14,7 +14,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun nextView(view: View) {
-        //インテントの作成
+        //インテントの作成、packageContextとは
         var intent = Intent(this, RegistrationActivity::class.java)
         startActivity(intent);
     }

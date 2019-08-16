@@ -2,6 +2,7 @@ package jp.co.cyberagent.dojo2019
 
 
 import android.graphics.Color
+import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -21,7 +22,7 @@ class MemberRecycleViewAdapter( private val itemList:List<MemberListModel>, priv
     //データ
     override fun onBindViewHolder(holder: MemberViewHolder, position: Int) {
         holder?.let {
-            it.nameID.text = itemList[position].nameID
+            it.nameID.text = Uri.decode(itemList[position].nameID)
             it.twitterID.text = itemList[position].twitterID
             it.githubID.text = itemList[position].githubID
 

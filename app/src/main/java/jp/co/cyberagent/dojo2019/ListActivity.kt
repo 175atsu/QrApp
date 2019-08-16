@@ -40,12 +40,12 @@ class ListActivity  : AppCompatActivity() {
         recyclerViewInitialSetting()
 
         val itemDecoration = DividerItemDecoration(this, DividerItemDecoration.VERTICAL)
-        recyclerView.addItemDecoration(itemDecoration)
+        //区切り線
+        //recyclerView.addItemDecoration(itemDecoration)
     }
 
     //カスタムURLの読み取り
     fun reedCustom() {
-
         //
         val intent = intent
         val action = intent.action

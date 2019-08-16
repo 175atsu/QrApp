@@ -3,6 +3,7 @@ package jp.co.cyberagent.dojo2019
 import android.app.AlertDialog
 import android.content.DialogInterface
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
@@ -40,7 +41,7 @@ class MemberDetailActivity : AppCompatActivity() {
 
     //各種アカウントの表示
     fun showAccount() {
-        val userName = intent.getStringExtra("NAME")
+        val userName = Uri.decode(intent.getStringExtra("NAME"))
         val twitter = intent.getStringExtra("TWITTER")
         val gitHub = intent.getStringExtra("GITHUB")
         val userNameTextView = findViewById<TextView>(R.id.user_name).apply {
