@@ -20,9 +20,6 @@ class MemberDetailActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.member_detail_view)
-        //val buttonTwitter = findViewById<TextView>(R.id.user_twitter)
-        //val buttonGithub = findViewById<TextView>(R.id.user_github)
-
 
         web()
         showAccount()

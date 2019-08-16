@@ -141,7 +141,6 @@ class ListActivity  : AppCompatActivity() {
             cell.getTransitionName()
         )
         startActivity(intent, compat.toBundle())
-        //startActivity(intent);
     }
 
 }
