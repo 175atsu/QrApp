@@ -102,6 +102,7 @@ class RegistrationActivity: AppCompatActivity() {
         }
     }
 
+    //スポットライトメソッド
     fun spotLite() {
         //fast target
         val target = findViewById<View>(R.id.name_text)
